@@ -72,6 +72,7 @@ function initFormHandler() {
 	//            submit button is clicked
 	const submit = document.querySelector("button[type='submit'");
 	submit.addEventListener("click", (event) => {
+		event.preventDefault();
 		const formData = new FormData(form);
 		const recipeObject = {};
 		for (let entry of formData.entries()) {
@@ -82,11 +83,9 @@ function initFormHandler() {
 		const newElem = document.createElement("recipe-card");
 		newElem.data = recipeObject;
 		document.querySelector("main").appendChild(newElem);
-		const recipesArr = localStorage.getItem("recipes");
-		console.log(recipesArr);
-		recipesArr.push(JSON.stringify(recipeObject));
-		console.log(recipesArr);
-		localStorage.setItem("recipes", recipesArr);
+		const recipesArr = JSON.parse(localStorage.getItem("recipes"));
+		recipesArr.push(recipeObject);
+		localStorage.setItem("recipes", JSON.stringify(recipesArr));
 	});
 	// Steps B4-B9 will occur inside the event listener from step B3
 	// B4. TODO - Create a new FormData object from the <form> element reference above
